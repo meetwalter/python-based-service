@@ -51,6 +51,9 @@ RUN mkdir -p /usr/src/python \
   && make install \
   && rm -r /usr/src/python
 
+# Make sure C-based wheels have headers to build against.
+RUN apt-get install -y python2.7-dev
+
 # Install Pip (and SetupTools).
 RUN mkdir -p /usr/src/pip \
   && curl -o /usr/src/pip/get-pip.py https://bootstrap.pypa.io/get-pip.py \

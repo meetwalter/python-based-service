@@ -40,7 +40,7 @@ RUN apt-get update \
   libncurses5-dev libncursesw5-dev libreadline-dev libreadline6-dev \
   libsqlite3-dev libssl-dev libtinfo-dev libyaml-dev mime-support net-tools \
   netbase python-crypto python-mox3 python-pil python-ply quilt tk-dev \
-  zlib1g-dev
+  libxml2-dev zlib1g-dev
 
 # Build and install Python.
 RUN mkdir -p /usr/src/python \

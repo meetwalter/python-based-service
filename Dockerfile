@@ -3,8 +3,8 @@ MAINTAINER Michael Williams
 ENV REFRESHED_AT 2016-04-22
 
 # Set correct environment variables.
-ENV PYTHON_MAJOR 2.7
-ENV PYTHON_VERSION 2.7.11
+ENV PYTHON_MAJOR 3.5
+ENV PYTHON_VERSION 3.5.2
 
 # ENV HOME does not seem to work currently; HOME is unset in Docker container.
 # See discussion at: https://github.com/phusion/baseimage-docker/issues/119
@@ -44,15 +44,15 @@ RUN apt-get update \
 
 # Build and install Python.
 RUN mkdir -p /usr/src/python \
-  && curl -SL "https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz" | tar -xz -f - -C /usr/src/python --strip-components=1 \
+  && curl -SL "https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz" | tar -xz -f - -C /usr/src/python --strip-components=1 \
   && cd /usr/src/python \
-  && ./configure --prefix /usr/local/lib/python2.7.11 --enable-ipv6 \
+  && ./configure --prefix /usr/local/lib/python3.5.2 --enable-ipv6 \
   && make -j"$(nproc)" \
   && make install \
   && rm -r /usr/src/python
 
 # Make sure C-based wheels have headers to build against.
-RUN apt-get install -y python2.7-dev
+RUN apt-get install -y python3-dev
 
 # Install Pip (and SetupTools).
 RUN mkdir -p /usr/src/pip \

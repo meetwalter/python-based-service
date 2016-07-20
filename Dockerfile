@@ -46,10 +46,14 @@ RUN apt-get update \
 RUN mkdir -p /usr/src/python \
   && curl -SL "https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz" | tar -xz -f - -C /usr/src/python --strip-components=1 \
   && cd /usr/src/python \
-  && ./configure --prefix /usr/local/lib/python3.5.2 --enable-ipv6 \
+  && ./configure --prefix /usr/local/python3.5.2 --enable-ipv6 \
   && make -j"$(nproc)" \
   && make install \
   && rm -r /usr/src/python
+
+# Make it the default Python.
+RUN rm -f /usr/bin/python \
+  && ln -s /usr/local/python3.5.2/bin/python3 /usr/bin/python
 
 # Make sure C-based wheels have headers to build against.
 RUN apt-get install -y python3-dev
@@ -57,7 +61,7 @@ RUN apt-get install -y python3-dev
 # Install Pip (and SetupTools).
 RUN mkdir -p /usr/src/pip \
   && curl -o /usr/src/pip/get-pip.py https://bootstrap.pypa.io/get-pip.py \
-  && python /usr/src/pip/get-pip.py
+  && python3 /usr/src/pip/get-pip.py
 
 # Clean up.
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
